@@ -1,0 +1,10 @@
+---
+  -
+    description: "A thick forest"
+    exits: ["east", "north"]
+  -
+    description: "An icy tundra"
+    exits: ["east", "north"]
+  -
+    description: "captivating marshlands"
+    exits: ["east", "north"]

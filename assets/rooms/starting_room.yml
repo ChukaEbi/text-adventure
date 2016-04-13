@@ -1,0 +1,4 @@
+---
+  starting_room:
+    description: "You wake up, mind still in a daze. You take a look around to get your bearings. You see two doors: one to the east and the other to the north"
+    exits: ["north", "east"]
