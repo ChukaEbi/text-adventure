@@ -6,6 +6,9 @@ class World
   attr_reader :rooms, :other_rooms
   WORLD_WIDTH = 5
   WORLD_HEIGHT = 5
+
+  attr_reader :rooms
+
   def initialize(world_width = WORLD_WIDTH, world_height = WORLD_HEIGHT)
     @rooms = []
     @message = "You have fallen off the edge of the world and died"
@@ -17,24 +20,25 @@ class World
     load_final_room
   end
 
-  def go_north(person, room)
+  def go_north(person)
     raise @message if person.y_position == WORLD_HEIGHT
-    person.move_north if (person.y_position < WORLD_HEIGHT && room.leave_room)
+    person.move_north if (person.y_position < WORLD_HEIGHT)
   end
 
-  def go_south(person, room)
+  def go_south(person)
     raise @message if person.y_position == 0
-    person.move_south if (person.y_position > 0 && room.leave_room)
+
+    person.move_south if (person.y_position > 0)
   end
 
-  def go_east(person, room)
+  def go_east(person)
     raise @message if person.x_position == WORLD_WIDTH
-    person.move_east if person.y_position < WORLD_WIDTH && room.leave_room)
+    person.move_east if (person.y_position < WORLD_WIDTH)
   end
 
-  def go_west(person,room)
+  def go_west(person)
     raise @message if (person.x_position == 0)
-    person.move_west if (person.y_position > 0 && room.leave_room)
+    person.move_west if (person.y_position > 0)
   end
 
   private

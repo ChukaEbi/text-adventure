@@ -3,43 +3,72 @@ require_relative 'player.rb'
 require_relative 'world.rb'
 
 class Game
-  DIRECTIONS = [:north, :east, :south, :west]
+  DIRECTIONS = ["north", "east", "south", "west"]
 
-  attr_reader :messages, :room
+  attr_reader :world, :player, :current_room
 
-  def initialize(message = YAML.load_file("assets/messages.yml"))
-    @messages = message['messages']
+  def initialize
     @world = World.new
-    @person = Player.new
+    @player = Player.new
+    @current_room
   end
 
   def start_game
-    puts @messages['beginning']
+    message('beginning')
     @world.create_rooms
-    current_room = @world.rooms[0]
-    i = 1
-    while(i < @world.rooms.length)
-      puts current_room.description
-      action = player_input
-      take_direction(action)
-      i+=1
-    end
-    puts @messages['end']
+    play_game
+    message('end')
   end
 
   def player_input
-    puts 'What do you want to do'
-    action = gets.chomp.to_sym
-  end
-
-  def take_direction(direction)
-    @world.go_north(@person, @current_room) if direction == :north
-    @world.go_south(@person, @current_room) if direction == :south
-    @world.go_east(@person, @current_room) if direction == :east
-    @world.go_west(@person, @current_room) if direction == :west
+    puts 'Which way do you want to go?'
+    gets.chomp!
   end
 
   def  player_position
     "You are at [#{@player.x_position}, #{@player.y_position}]"
+  end
+
+  private
+
+  def play_game
+    i = 0
+    while(i < @world.rooms.length)
+      @current_room = @world.rooms[i]
+      puts @current_room.description
+      if(i == @world.rooms.length - 1)
+        i+=1
+      else
+        action = player_input
+        take_direction(action)
+        i+=1
+      end
+    end
+  end
+
+  def take_direction(direction)
+    if(DIRECTIONS.include?(direction))
+        if(@current_room.leave_room(direction))
+          move_player(@player,direction)
+        else
+          puts 'There is no path there'
+          take_direction(gets.chomp!)
+        end
+    else
+      puts 'Please enter a valid direction'
+      take_direction(gets.chomp!)
+    end
+  end
+
+  def move_player(player,direction)
+    @world.go_north(player) if direction == :north
+    @world.go_south(player) if direction == :south
+    @world.go_east(player) if direction == :east
+    @world.go_west(player) if direction == :west
+  end
+
+  def message(screen_message)
+    m = YAML.load_file("assets/messages.yml")
+    puts m[screen_message]
   end
 end

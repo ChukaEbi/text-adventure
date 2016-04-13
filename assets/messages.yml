@@ -1,4 +1,3 @@
 ---
-  messages:
-    beginning: "welcome to the world of Chukapatena."
-    end: "Thank you for playing"
+  beginning: "welcome to the world of Chukapatena."
+  end: "Thank you for playing"
