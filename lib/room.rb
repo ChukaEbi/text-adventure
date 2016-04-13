@@ -7,8 +7,7 @@ class Room
   end
 
   def leave_room(direction)
-    message = "there is no way of leaving in this direction"
-    raise message unless @exits.include(direction)
+     @exits.include?(direction)
   end
 
 end

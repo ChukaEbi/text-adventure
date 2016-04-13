@@ -22,7 +22,6 @@ class Game
       puts current_room.description
       action = player_input
       take_direction(action)
-      current_room = @world.rooms[i]
       i+=1
     end
     puts @messages['end']
@@ -34,9 +33,13 @@ class Game
   end
 
   def take_direction(direction)
-    @world.go_north(@person) if direction == :north
-    @world.go_south(@person) if direction == :south
-    @world.go_east(@person) if direction == :east
-    @world.go_west(@person) if direction == :west
+    @world.go_north(@person, @current_room) if direction == :north
+    @world.go_south(@person, @current_room) if direction == :south
+    @world.go_east(@person, @current_room) if direction == :east
+    @world.go_west(@person, @current_room) if direction == :west
+  end
+
+  def  player_position
+    "You are at [#{@player.x_position}, #{@player.y_position}]"
   end
 end

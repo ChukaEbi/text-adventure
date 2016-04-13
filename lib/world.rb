@@ -4,8 +4,8 @@ require 'yaml'
 class World
 
   attr_reader :rooms, :other_rooms
-  WORLD_WIDTH = 3
-  WORLD_HEIGHT = 3
+  WORLD_WIDTH = 5
+  WORLD_HEIGHT = 5
   def initialize(world_width = WORLD_WIDTH, world_height = WORLD_HEIGHT)
     @rooms = []
     @message = "You have fallen off the edge of the world and died"
@@ -17,24 +17,24 @@ class World
     load_final_room
   end
 
-  def go_north(person)
+  def go_north(person, room)
     raise @message if person.y_position == WORLD_HEIGHT
-    person.move_north if person.y_position < WORLD_HEIGHT
+    person.move_north if (person.y_position < WORLD_HEIGHT && room.leave_room)
   end
 
-  def go_south(person)
+  def go_south(person, room)
     raise @message if person.y_position == 0
-    person.move_south if person.y_position > 0
+    person.move_south if (person.y_position > 0 && room.leave_room)
   end
 
-  def go_east(person)
+  def go_east(person, room)
     raise @message if person.x_position == WORLD_WIDTH
-    person.move_east if person.y_position < WORLD_WIDTH
+    person.move_east if person.y_position < WORLD_WIDTH && room.leave_room)
   end
 
-  def go_west(person)
-    raise @message if person.x_position == 0
-    person.move_west if person.y_position > 0
+  def go_west(person,room)
+    raise @message if (person.x_position == 0)
+    person.move_west if (person.y_position > 0 && room.leave_room)
   end
 
   private
