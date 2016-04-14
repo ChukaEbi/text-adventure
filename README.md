@@ -30,7 +30,7 @@ I stored the rooms in yaml files because it would be easier to create new rooms 
  https://github.com/ChukaEbi/text-adventure
  ```
 
- then run ```play.rb```
+ then run ```ruby play.rb```
  Currently, the only valid inputs are north, south, east, or west.
 
 ## Improvements
